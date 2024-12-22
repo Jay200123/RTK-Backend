@@ -1,6 +1,5 @@
-
 export const RESOURCE = {
-    USERS: "users",
-    BLACKLIST: "blacklist",
-  };
-  
+  USERS: "users",
+  BLACKLIST: "blacklist",
+  PRODUCTS: "products",
+};
