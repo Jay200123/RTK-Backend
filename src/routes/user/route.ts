@@ -10,7 +10,7 @@ const userRoutes: Route[] = [
     method: METHOD.GET as keyof Router,
     path: PATH.USERS,
     role: [ROLE.ADMIN],
-    middleware: [],
+    middleware: [verifyToken],
     handler: UserController.getAllUsers,
   },
   {
