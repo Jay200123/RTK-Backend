@@ -22,10 +22,12 @@ export class ProductController {
 
   static async AddProduct(req: Request, res: Response, next: NextFunction) {
     const image = await uploadImage(req.files as Express.Multer.File[], []);
+    const price = Number(req.body.price); 
     const quantity = Number(req.body.quantity);
     const data = await ProductService.Add({
       ...req.body,
       quantity: quantity,
+      price: price,
       image: image,
     });
     return SuccessHandler(res, "Product created successfully", data);
