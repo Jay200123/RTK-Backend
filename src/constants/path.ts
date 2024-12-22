@@ -7,4 +7,7 @@ export const PATH = {
   PRODUCTS: "/products",
   PRODUCT_ID: "/product/:id",
   EDIT_PRODUCT_ID: "/product/edit/:id",
+  BRANDS: "/brands",
+  BRAND_ID: "/brand/:id",
+  EDIT_BRAND_ID: "/brand/edit/:id",
 };
