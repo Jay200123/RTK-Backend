@@ -1,10 +1,11 @@
+import mongoose from "mongoose";
 import { RESOURCE } from "../../constants";
 import { Product, Schema, model } from "../../interface";
 
 const productSchema: Schema<Product> = new Schema({
   brand: {
-    type: String,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: RESOURCE.BRANDS,
   },
   product_name: {
     type: String,
@@ -22,7 +23,7 @@ const productSchema: Schema<Product> = new Schema({
     type: String,
     required: true,
   },
-  quantity:{
+  quantity: {
     type: Number,
     required: true,
   },
