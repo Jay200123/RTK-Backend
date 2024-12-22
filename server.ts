@@ -1,7 +1,7 @@
 import { connectDB, globalEnvironment } from "./src/config";
 import { express, mongoose } from "./src/interface";
 import { upload } from "./src/utils";
-import { user, authentication } from "./src/routes";
+import { authentication, user, product } from "./src/routes";
 import { errorJson, errorHandler } from "./src/middleware";
 import cookieParser from "cookie-parser";
 
@@ -12,7 +12,7 @@ const app = express();
 
 app.use(upload.array("image"));
 app.use(express.json());
-app.use(cookieParser());  
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   res.json(data);
 });
 
-app.use("/api/v1", authentication, user);
+app.use("/api/v1", authentication, user, product);
 
 app.get("*", (req, res) => {
   const data = { message: "Route not found" };
