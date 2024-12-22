@@ -20,7 +20,13 @@ app.get("/", (req, res) => {
   res.json(data);
 });
 
-app.use("/api/v1", authentication, user, brand, product, order);
+app.use("/api/v1", 
+  authentication,
+  user,
+  brand,
+  product,
+  order
+);
 
 app.get("*", (req, res) => {
   const data = { message: "Route not found" };
