@@ -21,7 +21,7 @@ const userRoutes: Route[] = [
     handler: BrandController.getOneBrand,
   },
   {
-    method: METHOD.GET as keyof Router,
+    method: METHOD.POST as keyof Router,
     path: PATH.BRANDS,
     role: [ROLE.ADMIN],
     middleware: [verifyToken],
