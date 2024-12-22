@@ -10,4 +10,7 @@ export const PATH = {
   BRANDS: "/brands",
   BRAND_ID: "/brand/:id",
   EDIT_BRAND_ID: "/brand/edit/:id",
+  ORDERS: "/orders",
+  ORDER_ID: "/order/:id",
+  EDIT_ORDER_ID: "/order/edit/:id",
 };
