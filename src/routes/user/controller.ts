@@ -9,8 +9,8 @@ export class UserController {
   static async getAllUsers(req: Request, res: Response, next: NextFunction) {
     const data = await UserService.getAll();
     return !data || data?.length === STATUSCODE.ZERO
-      ? SuccessHandler(res, "User records found", data)
-      : new ErrorHandler("No user records found");
+    ? new ErrorHandler("No user records found")
+    : SuccessHandler(res, "User records found", data);
   }
 
   static async getOneUser(req: Request, res: Response, next: NextFunction) {
