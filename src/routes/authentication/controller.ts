@@ -1,16 +1,28 @@
 import { UserService } from "../user/service";
-import { ErrorHandler, SuccessHandler } from "../../utils";
 import { Request, Response, NextFunction, mongoose } from "../../interface";
-import { uploadImage } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  uploadImage,
+  hashPassword,
+} from "../../utils";
 import bcrypt from "bcrypt";
 import { generateToken, generateBlacklist } from "../../middleware";
 
 export class AuthenticationController {
-  
   static async register(req: Request, res: Response, next: NextFunction) {
+    const user = await UserService.getOnEmail(req.body.email);
+
+    if (user) {
+      return next(new ErrorHandler("Email already exists"));
+    }
+
+    const password = await hashPassword(req.body.password);
     const image = await uploadImage(req.files as Express.Multer.File[], []);
+
     const data = await UserService.Add({
       ...req.body,
+      password: password,
       image: image,
     });
     return SuccessHandler(res, "User created", data);
