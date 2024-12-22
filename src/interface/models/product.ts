@@ -1,7 +1,10 @@
 import { Image } from "../image";
+import { mongoose } from "../mongoose";
+import { Brand } from "./brand";
 
 interface Product extends Document {
-  brand: string;
+  _id: mongoose.Types.ObjectId;
+  brand: mongoose.Types.ObjectId | Brand; 
   product_name: string;
   description: string;
   color: string;
