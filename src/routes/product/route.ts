@@ -21,7 +21,7 @@ const userRoutes: Route[] = [
     handler: ProductController.getOneProduct,
   },
   {
-    method: METHOD.GET as keyof Router,
+    method: METHOD.POST as keyof Router,
     path: PATH.PRODUCTS,
     role: [ROLE.ADMIN],
     middleware: [verifyToken],
