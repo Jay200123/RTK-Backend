@@ -3,6 +3,7 @@ import { express, mongoose } from "./src/interface";
 import { upload } from "./src/utils";
 import { user, authentication } from "./src/routes";
 import { errorJson, errorHandler } from "./src/middleware";
+import cookieParser from "cookie-parser";
 
 connectDB();
 globalEnvironment();
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(upload.array("image"));
 app.use(express.json());
+app.use(cookieParser());  
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
