@@ -18,6 +18,34 @@ export class OrderService {
     return await Order.findByIdAndUpdate(id, data, { new: true });
   }
 
+  static async findLastOrder() {
+    return await Order.findOne().sort({ date_placed: -1 });
+  }
+
+  static async orderPacked(id: string) {
+    return await Order.findByIdAndUpdate(
+      id,
+      { status: "Packed" },
+      { new: true }
+    );
+  }
+
+  static async orderShipped(id: string) {
+    return await Order.findByIdAndUpdate(
+      id,
+      { status: "Shipped" },
+      { new: true }
+    );
+  }
+
+  static async orderDelivered(id: string) {
+    return await Order.findByIdAndUpdate(
+      id,
+      { status: "Delivered" },
+      { new: true }
+    );
+  }
+
   static async deleteById(id: string) {
     return await Order.findByIdAndDelete(id);
   }
