@@ -9,17 +9,25 @@ type ProductOrder = {
   quantity: number;
 };
 
+type StatusOrder =
+  | "Processing"
+  | "Delivered"
+  | "Packed"
+  | "Shipped"
+  | "Cancelled";
+
 interface Order extends Document {
   _id: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId | User;
-  product: ProductOrder[];
+  products: ProductOrder[];
   counter: number;
   orderNumber: string;
   date_placed: Date;
   date_delivered: Date;
   price: number;
-  status: string;
+  status: StatusOrder;
   payment: Payment;
+  createdAt: Date;  
 }
 
 export type { Order };
