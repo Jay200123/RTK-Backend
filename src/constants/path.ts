@@ -13,4 +13,7 @@ export const PATH = {
   ORDERS: "/orders",
   ORDER_ID: "/order/:id",
   EDIT_ORDER_ID: "/order/edit/:id",
+  ORDER_PACKED: "/order/packed/:id",
+  ORDER_SHIPPED: "/order/shipped/:id",
+  ORDER_DELIVERED: "/order/delivered/:id",
 };
