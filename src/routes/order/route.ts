@@ -35,6 +35,27 @@ const orderRoutes: Route[] = [
     handler: OrderController.updateOrder,
   },
   {
+    method: METHOD.PATCH as keyof Router,
+    path: PATH.ORDER_PACKED,
+    role: [ROLE.ADMIN],
+    middleware: [verifyToken],
+    handler: OrderController.orderPacked,
+  },
+  {
+    method: METHOD.PATCH as keyof Router,
+    path: PATH.ORDER_SHIPPED,
+    role: [ROLE.ADMIN],
+    middleware: [verifyToken],
+    handler: OrderController.orderShipped,
+  },
+  {
+    method: METHOD.PATCH as keyof Router,
+    path: PATH.ORDER_DELIVERED,
+    role: [ROLE.ADMIN],
+    middleware: [verifyToken],
+    handler: OrderController.orderDelivered,
+  },
+  {
     method: METHOD.DELETE as keyof Router,
     path: PATH.ORDER_ID,
     role: [ROLE.ADMIN],
