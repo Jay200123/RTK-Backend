@@ -1,7 +1,26 @@
 import { Order, Schema, model } from "../../interface";
 import { RESOURCE } from "../../constants";
+import mongoose from "mongoose";
 
 const orderSchema: Schema<Order> = new Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: RESOURCE.USERS,
+    required: true,
+  },
+  products: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RESOURCE.PRODUCTS,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
   counter: {
     type: Number,
     required: true,
@@ -12,11 +31,11 @@ const orderSchema: Schema<Order> = new Schema({
   },
   date_placed: {
     type: Date,
-    required: true,
+    default: Date.now,  
   },
   date_delivered: {
     type: Date,
-    required: true,
+    required: false,
   },
   price: {
     type: Number,
@@ -24,7 +43,7 @@ const orderSchema: Schema<Order> = new Schema({
   },
   status: {
     type: String,
-    required: true,
+    default:"Processing",
   },
   payment: {
     type: String,
