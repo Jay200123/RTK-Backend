@@ -4,6 +4,8 @@ import { upload } from "./src/utils";
 import { authentication, user, product, brand, order } from "./src/routes";
 import { errorJson, errorHandler } from "./src/middleware";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import { corsOptions } from "./src/config";
 
 connectDB();
 globalEnvironment();
@@ -13,6 +15,7 @@ const app = express();
 app.use(upload.array("image"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
