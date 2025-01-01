@@ -23,7 +23,7 @@ export class UserController {
   static async AddUser(req: Request, res: Response, next: NextFunction) {
     const image = await uploadImage(req.files as Express.Multer.File[], []);
     const data = await UserService.Add({
-      ...req.body,
+      ...req.body,  
       image: image,
     });
     return SuccessHandler(res, "User created", data);
