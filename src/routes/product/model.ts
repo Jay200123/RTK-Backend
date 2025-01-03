@@ -23,13 +23,21 @@ const productSchema: Schema<Product> = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,
   },
+  isNew: {
+    type: Boolean,
+    default : false,
+  },
   image: [
     {
-      public_id: String,
+      public_id: String,  
       url: String,
       originalname: String,
     },
