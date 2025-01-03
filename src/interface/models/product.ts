@@ -2,6 +2,8 @@ import { Image } from "../image";
 import { mongoose } from "../mongoose";
 import { Brand } from "./brand";
 
+type Category = "Mobile" | "Laptop" | "Computer" | "Tablet";
+
 interface Product extends Document {
   _id: mongoose.Types.ObjectId;
   brand: mongoose.Types.ObjectId | Brand; 
@@ -9,7 +11,9 @@ interface Product extends Document {
   description: string;
   color: string;
   price: number;
-  quantity: number; 
+  quantity: number;
+  category: Category; 
+  isNew: boolean;
   image: Image[];
 }
 
