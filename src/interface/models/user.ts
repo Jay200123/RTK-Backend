@@ -12,7 +12,7 @@ interface User extends Document {
   city: string;
   contact_number: string;
   role: Role;
-  image: Image;
+  image: Image[];
 }
 
 export type { User };
