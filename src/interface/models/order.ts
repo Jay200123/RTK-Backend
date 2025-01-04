@@ -13,7 +13,7 @@ type StatusOrder =
   | "Processing"
   | "Delivered"
   | "Packed"
-  | "Shipped"
+  | "Shipped" 
   | "Cancelled";
 
 interface Order extends Document {
