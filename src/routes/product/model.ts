@@ -31,7 +31,7 @@ const productSchema: Schema<Product> = new Schema({
     type: Number,
     required: true,
   },
-  isNew: {
+  isNewlyCreated: {
     type: Boolean,
     default : false,
   },
