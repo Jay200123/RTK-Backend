@@ -9,8 +9,8 @@ export class UserController {
   static async getAllUsers(req: Request, res: Response, next: NextFunction) {
     const data = await UserService.getAll();
     return !data || data?.length === STATUSCODE.ZERO
-    ? new ErrorHandler("No user records found")
-    : SuccessHandler(res, "User records found", data);
+      ? new ErrorHandler("No user records found")
+      : SuccessHandler(res, "User records found", data);
   }
 
   static async getOneUser(req: Request, res: Response, next: NextFunction) {
@@ -23,7 +23,7 @@ export class UserController {
   static async AddUser(req: Request, res: Response, next: NextFunction) {
     const image = await uploadImage(req.files as Express.Multer.File[], []);
     const data = await UserService.Add({
-      ...req.body,  
+      ...req.body,
       image: image,
     });
     return SuccessHandler(res, "User created", data);
@@ -38,7 +38,11 @@ export class UserController {
 
     let image: Image[];
 
-    image = await uploadImage(req.files as Express.Multer.File[], oldImage);
+    if (Array.isArray(req.files) && req.files.length > 0) {
+      image = await uploadImage(req.files as Express.Multer.File[], oldImage);
+    } else {
+      image = Array.isArray(user.image) ? user.image : [];
+    }
 
     const data = await UserService.updateById(req.params.id, {
       ...req.body,
