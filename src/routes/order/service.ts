@@ -3,12 +3,11 @@ import Order from "./model";
 
 export class OrderService {
   static async getAll() {
-    return Order.find()
-    .populate("products.product")
+    return Order.find().populate("products.product");
   }
 
   static async getById(id: string) {
-    return await Order.findById(id);
+    return await Order.findById(id).populate("products.product");
   }
 
   static async Add(data: OrderType) {
