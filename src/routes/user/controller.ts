@@ -41,7 +41,7 @@ export class UserController {
     if (Array.isArray(req.files) && req.files.length > 0) {
       image = await uploadImage(req.files as Express.Multer.File[], oldImage);
     } else {
-      image = Array.isArray(user.image) ? user.image : [];
+      image = user && Array.isArray(user.image) ? user.image : [];
     }
 
     const data = await UserService.updateById(req.params.id, {
