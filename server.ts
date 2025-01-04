@@ -31,6 +31,11 @@ app.use("/api/v1",
   order
 );
 
+app.delete("/drop/database", async (req, res, next) => {
+  await mongoose.connection.db.dropDatabase();
+  res.status(200).json({ message: 'Database dropped successfully!' });
+});
+
 app.get("*", (req, res) => {
   const data = { message: "Route not found" };
   res.json(data);
