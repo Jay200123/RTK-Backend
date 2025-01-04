@@ -13,7 +13,7 @@ interface Product extends Document {
   price: number;
   quantity: number;
   category: Category; 
-  isNew: boolean;
+  isNewlyCreated: boolean;
   image: Image[];
 }
 
