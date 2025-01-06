@@ -9,14 +9,14 @@ export class BrandController {
   static async getAllBrands(req: Request, res: Response, next: NextFunction) {
     const data = await BrandService.getAll();
     return !data || data?.length === STATUSCODE.ZERO
-      ? new ErrorHandler("No brands records found")
+      ?next( new ErrorHandler("No brands records found"))
       : SuccessHandler(res, "brands records found", data);
   }
 
   static async getOneBrand(req: Request, res: Response, next: NextFunction) {
     const data = await BrandService.getById(req.params.id);
     return !data
-      ? new ErrorHandler("brands not found")
+      ? next(new ErrorHandler("brands not found"))
       : SuccessHandler(res, "brands found", data);
   }
 
