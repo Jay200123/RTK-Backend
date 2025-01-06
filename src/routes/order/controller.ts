@@ -9,14 +9,14 @@ export class OrderController {
     const data = await OrderService.getAll();
 
     return !data || data.length === STATUSCODE.ZERO
-      ? new ErrorHandler("No orders found")
+      ?  next(new ErrorHandler("No orders found"))
       : SuccessHandler(res, "Orders found", data);
   }
 
   static async getOneOrder(req: Request, res: Response, next: NextFunction) {
     const data = await OrderService.getById(req.params.id);
     return !data
-      ? new ErrorHandler("Order not found")
+      ? next(new ErrorHandler("Order not found"))
       : SuccessHandler(res, "Order record found", data);
   }
 
