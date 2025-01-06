@@ -9,14 +9,14 @@ export class UserController {
   static async getAllUsers(req: Request, res: Response, next: NextFunction) {
     const data = await UserService.getAll();
     return !data || data?.length === STATUSCODE.ZERO
-      ? new ErrorHandler("No user records found")
+      ? next(new ErrorHandler("No user records found"))
       : SuccessHandler(res, "User records found", data);
   }
 
   static async getOneUser(req: Request, res: Response, next: NextFunction) {
     const data = await UserService.getOne(req.params.id);
     return !data
-      ? new ErrorHandler("User not found")
+      ? next(new ErrorHandler("User not found"))
       : SuccessHandler(res, "User found", data);
   }
 
