@@ -9,20 +9,20 @@ export class ProductController {
   static async getAllProducts(req: Request, res: Response, next: NextFunction) {
     const data = await ProductService.getAll();
     return !data || data?.length === STATUSCODE.ZERO
-      ? new ErrorHandler("No Product records found")
+      ? next(new ErrorHandler("No Product records found"))
       : SuccessHandler(res, "Product records found", data);
   }
 
   static async getOneProduct(req: Request, res: Response, next: NextFunction) {
     const data = await ProductService.getOne(req.params.id);
     return !data
-      ? new ErrorHandler("Product not found")
+      ? next(new ErrorHandler("Product not found"))
       : SuccessHandler(res, "Product found", data);
   }
 
   static async AddProduct(req: Request, res: Response, next: NextFunction) {
     const image = await uploadImage(req.files as Express.Multer.File[], []);
-    const price = Number(req.body.price); 
+    const price = Number(req.body.price);
     const quantity = Number(req.body.quantity);
     const data = await ProductService.Add({
       ...req.body,
@@ -37,15 +37,21 @@ export class ProductController {
     const product = await ProductService.getOne(req.params.id);
 
     const oldImage = Array?.isArray(product?.image)
-      ? product?.image?.map((i) => i?.public_id)
+      ? product?.image?.map((u) => u?.public_id)
       : [];
 
     let image: Image[];
 
-    image = await uploadImage(req.files as Express.Multer.File[], oldImage);
+    if (Array.isArray(req.files) && req.files.length > 0) {
+      image = await uploadImage(req.files as Express.Multer.File[], oldImage);
+    } else {
+      image = product && Array.isArray(product.image) ? product.image : [];
+    }
 
     const data = await ProductService.updateById(req.params.id, {
       ...req.body,
+      price: Number(req.body.price),
+      quantity: Number(req.body.quantity),
       image: image,
     });
 
