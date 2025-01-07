@@ -6,7 +6,11 @@ export class ProductService {
     return await Product.find();
   }
   static async getOne(id: string) {
-    return await Product.findById(id);
+    return await Product.findById(id)
+    .populate({
+      path: 'brand',  
+      select: 'brand_name'
+    })
   }
   static async Add(data: ProductType) {
     return await Product.create(data);
