@@ -3,7 +3,13 @@ import Order from "./model";
 
 export class OrderService {
   static async getAll() {
-    return Order.find().populate("products.product");
+    return Order.find()
+    .populate("products.product")
+    .populate({
+      path:"user",
+      select: "fullname"
+    })
+    ;
   }
 
   static async getById(id: string) {
