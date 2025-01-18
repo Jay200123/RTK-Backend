@@ -6,6 +6,13 @@ const brandSchema: Schema<Brand> = new Schema({
     type: String,
     required: true,
   },
+  image: [
+    {
+      public_id: String,
+      url: String,  
+      originalname: String,
+    }
+  ]
 });
 
 const Brand = model<Brand>(RESOURCE.BRANDS, brandSchema);
