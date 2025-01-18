@@ -1,7 +1,7 @@
 {
   "name": "e-com-backend",
   "version": "1.0.0",
-  "main": "dist/server.js",
+  "main": "dist/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec ts-node server.ts",
