@@ -9,15 +9,15 @@ const userRoutes: Route[] = [
   {
     method: METHOD.GET as keyof Router,
     path: PATH.BRANDS,
-    role: [ROLE.ADMIN, ROLE.USER],
-    middleware: [verifyToken],
+    role: [],
+    middleware: [],
     handler: BrandController.getAllBrands,
   },
   {
     method: METHOD.GET as keyof Router,
     path: PATH.BRAND_ID,
-    role: [ROLE.ADMIN, ROLE.USER],
-    middleware: [verifyToken],
+    role: [],
+    middleware: [],
     handler: BrandController.getOneBrand,
   },
   {
