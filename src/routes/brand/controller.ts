@@ -21,8 +21,10 @@ export class BrandController {
   }
 
   static async AddBrand(req: Request, res: Response, next: NextFunction) {
+    const image = await uploadImage(req.files as Express.Multer.File[], []);   
     const data = await BrandService.Add({
       ...req.body,
+      image: image,
     });
     return SuccessHandler(res, "brands created successfully", data);
   }
