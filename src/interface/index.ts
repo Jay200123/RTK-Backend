@@ -7,3 +7,4 @@ export * from "./models/blacklist";
 export * from "./models/product";
 export * from "./models/brand";
 export * from "./models/order";
+export * from "./models/rating";  
