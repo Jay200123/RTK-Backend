@@ -3,5 +3,6 @@ export const RESOURCE = {
   BLACKLIST: "blacklist",
   PRODUCTS: "products",
   BRANDS: "brands", 
-  ORDERS: "orders",	
+  ORDERS: "orders",
+  RATINGS: "ratings",	  	
 };
