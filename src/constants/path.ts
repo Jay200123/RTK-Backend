@@ -1,4 +1,4 @@
-  export const PATH = {
+export const PATH = {
   USERS: "/users",
   USER_ID: "/user/:id",
   EDIT_USER_ID: "/user/edit/:id",
@@ -16,4 +16,7 @@
   ORDER_PACKED: "/order/packed/:id",
   ORDER_SHIPPED: "/order/shipped/:id",
   ORDER_DELIVERED: "/order/delivered/:id",
+  RATINGS: "/ratings",
+  RATING_ID: "/rating/:id",
+  EDIT_RATING_ID: "/rating/edit/:id",
 };
