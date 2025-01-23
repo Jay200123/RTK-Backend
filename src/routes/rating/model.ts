@@ -15,7 +15,7 @@ const ratingSchema: Schema<Ratings> = new Schema({
     required: true,
   },
   rating: {
-    type: Number,
+    type: Number, 
     required: true,
   },
   image: [
