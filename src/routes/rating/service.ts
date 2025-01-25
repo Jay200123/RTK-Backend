@@ -10,7 +10,7 @@ export class RatingService {
       })
       .populate({
         path: "product",
-        select: "product_name color category",
+        select: "product_name color price category image",
       });
   }
 
@@ -22,7 +22,7 @@ export class RatingService {
       })
       .populate({
         path: "product",
-        select: "product_name color category",
+        select: "product_name color price category image",
       });
   }
 
