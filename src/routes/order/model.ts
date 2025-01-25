@@ -19,6 +19,10 @@ const orderSchema: Schema<Order> = new Schema({
         type: Number,
         required: true,
       },
+      isReviewed: {
+        type: Boolean,
+        default: false,
+      },
     },
   ],
   counter: {
@@ -31,7 +35,7 @@ const orderSchema: Schema<Order> = new Schema({
   },
   date_placed: {
     type: Date,
-    default: Date.now,  
+    default: Date.now,
   },
   date_delivered: {
     type: Date,
@@ -43,7 +47,7 @@ const orderSchema: Schema<Order> = new Schema({
   },
   status: {
     type: String,
-    default:"Processing",
+    default: "Processing",
   },
   payment: {
     type: String,
