@@ -22,8 +22,8 @@ const ratingRoutes: Route[] = [
   },
   {
     method: METHOD.POST as keyof Router,
-    path: PATH.RATINGS,
-    role: [ROLE.USER],
+    path: PATH.RATE_ORDER,
+    role: [ROLE.USER, ROLE.ADMIN],
     middleware: [verifyToken],
     handler: RatingController.AddRating,
   },
