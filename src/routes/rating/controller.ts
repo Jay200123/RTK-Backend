@@ -1,9 +1,10 @@
 import { RatingService } from "./service";
+import { OrderService } from "../order/service";
 import { Request, Response, NextFunction } from "../../interface";
 import { ErrorHandler, SuccessHandler, uploadImage } from "../../utils";
 import { cloudinary } from "../../config";
 import { STATUSCODE } from "../../constants";
-import { Image } from "../../interface";
+import { Image, Product } from "../../interface";
 
 export class RatingController {
   static async getAllRatings(req: Request, res: Response, next: NextFunction) {
@@ -21,6 +22,16 @@ export class RatingController {
   }
 
   static async AddRating(req: Request, res: Response, next: NextFunction) {
+    const order = await OrderService.getById(req.params.id);
+
+    const findProduct = order?.products?.find(
+      (p) => (p?.product as Product)?._id.toString() === req.body.product
+    );
+
+    if (findProduct && "isReviewed" in findProduct) {
+      await OrderService.updateProductStatus(req.params.id, req.body.product);
+    }
+
     const image = await uploadImage(req.files as Express.Multer.File[], []);
     const rating = Number(req.body.rating);
     const data = await RatingService.Add({
