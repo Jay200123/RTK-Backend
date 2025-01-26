@@ -27,7 +27,11 @@ export class RatingService {
       .populate({
         path: "product",
         select: "product_name color price category image",
-      });
+      })
+      .populate({ 
+        path: "order",
+        select:"orderNumber date_placed date_delivered price status payment",  
+      })
   }
 
   static async Add(data: Ratings) {
