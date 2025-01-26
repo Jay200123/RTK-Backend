@@ -10,6 +10,10 @@ const ratingSchema: Schema<Ratings> = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: RESOURCE.PRODUCTS,
   },
+  order: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: RESOURCE.ORDERS, 
+  },
   description: {
     type: String,
     required: true,
