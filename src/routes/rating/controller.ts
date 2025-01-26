@@ -28,10 +28,6 @@ export class RatingController {
       (p) => (p?.product as Product)?._id.toString() === req.body.product
     );
 
-    if (findProduct && "isReviewed" in findProduct) {
-      await OrderService.updateProductStatus(req.params.id, req.body.product);
-    }
-
     const image = await uploadImage(req.files as Express.Multer.File[], []);
     const rating = Number(req.body.rating);
     const data = await RatingService.Add({
@@ -39,6 +35,15 @@ export class RatingController {
       rating: rating,
       image: image,
     });
+
+    if (findProduct && "isReviewed" in findProduct) {
+      await OrderService.updateProductStatus(
+        req.params.id,
+        req.body.product,
+        data?._id.toString()
+      );  
+    }
+
     return SuccessHandler(res, "Rating created successfully", data);
   }
 
