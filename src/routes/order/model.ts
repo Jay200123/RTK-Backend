@@ -1,6 +1,7 @@
 import { Order, Schema, model } from "../../interface";
 import { RESOURCE } from "../../constants";
 import mongoose from "mongoose";
+import { rating } from "..";
 
 const orderSchema: Schema<Order> = new Schema({
   user: {
@@ -14,6 +15,12 @@ const orderSchema: Schema<Order> = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: RESOURCE.PRODUCTS,
         required: true,
+      },
+      rating: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: RESOURCE.RATINGS,
+        required: false,
+        default: null,
       },
       quantity: {
         type: Number,
