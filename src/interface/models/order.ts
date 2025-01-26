@@ -1,12 +1,14 @@
 import { mongoose } from "../mongoose";
 import { User } from "./user";
 import { Product } from "./product";
+import { Ratings } from "./rating";
 
 type Payment = "cash" | "credit card" | "online payment";
 
 type ProductOrder = {
   product: mongoose.Schema.Types.ObjectId | Product;
   quantity: number;
+  rating: mongoose.Schema.Types.ObjectId | Ratings;
 };
 
 type StatusOrder =
