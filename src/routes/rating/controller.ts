@@ -32,6 +32,7 @@ export class RatingController {
     const rating = Number(req.body.rating);
     const data = await RatingService.Add({
       ...req.body,
+      order: req.params.id,
       rating: rating,
       image: image,
     });
