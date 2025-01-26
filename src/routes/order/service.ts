@@ -3,10 +3,34 @@ import Order from "./model";
 
 export class OrderService {
   static async getAll() {
-    return Order.find().populate("products.product").populate({
-      path: "user",
-      select: "fullname",
-    });
+    return Order.find()
+      .populate({
+        path: "products",
+        select: "product",
+        populate: {
+          path: "product",
+          select:
+            "brand product_name price description color category quantity isNewlyCreated image",
+          populate: {
+            path: "brand",
+            select: "brand_name",
+          },
+        },
+      })
+      .populate({
+        path: "user",
+        select: "fullname",
+      })
+      .populate({
+        path: "products",
+        select: "rating",
+        populate: {
+          path: "rating",
+          select: "rating description image",
+        },
+      })
+      .lean()
+      .exec();
   }
 
   static async getById(id: string) {
@@ -27,7 +51,17 @@ export class OrderService {
       .populate({
         path: "user",
         select: "fullname",
-      });
+      })
+      .populate({
+        path: "products",
+        select: "rating",
+        populate: {
+          path: "rating",
+          select: "rating description image",
+        },
+      })
+      .lean()
+      .exec();
   }
 
   static async Add(data: OrderType) {
@@ -70,12 +104,17 @@ export class OrderService {
     return await Order.findByIdAndDelete(id);
   }
 
-  static async updateProductStatus(id: string, product: string) {
+  static async updateProductStatus(
+    id: string,
+    product: string,
+    rating: string
+  ) {
     return await Order.findOneAndUpdate(
       { _id: id },
       {
         $set: {
           "products.$[elem].isReviewed": true,
+          "products.$[elem].rating": rating,
         },
       },
       {
