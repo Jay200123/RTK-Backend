@@ -63,9 +63,9 @@ export class OrderController {
   static async orderPacked(req: Request, res: Response, next: NextFunction) {
     const data = await OrderService.orderPacked(req.params.id);
 
-    for(const test of data?.products){
-      const product = await ProductService.getOne(test?.product?.toString()); 
-     await ProductService.updateById(test?.product?.toString(), { quantity: product?.quantity - test?.quantity });  
+    for(const order of data?.products){
+      const product = await ProductService.getOne(order?.product?.toString()); 
+     await ProductService.updateById(order?.product?.toString(), { quantity: product?.quantity - order?.quantity });  
     }
     return SuccessHandler(res, "Order successfully packed", data);
   }
