@@ -16,7 +16,7 @@ const authenticationRoutes: Route[] = [
     handler: AuthenticationController.login,
   },
   {
-    method: METHOD.GET as keyof Router,
+    method: METHOD.POST as keyof Router,
     path: PATH.LOGOUT,
     handler: AuthenticationController.logout,
   },
