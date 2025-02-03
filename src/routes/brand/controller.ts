@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction, Image } from "../../interface";
-import { ErrorHandler, SuccessHandler } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  validateRequiredFields,
+} from "../../utils";
 import { BrandService } from "./service";
 import { STATUSCODE } from "../../constants";
 import { uploadImage } from "../../utils";
-import { cloudinary } from "../../config";  
+import { cloudinary } from "../../config";
 
 export class BrandController {
   static async getAllBrands(req: Request, res: Response, next: NextFunction) {
@@ -21,6 +25,11 @@ export class BrandController {
   }
 
   static async AddBrand(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, ["brand_name"]);
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+
     const image = await uploadImage(req.files as Express.Multer.File[], []);
     const data = await BrandService.Add({
       ...req.body,
@@ -31,6 +40,11 @@ export class BrandController {
 
   static async updateBrand(req: Request, res: Response, next: NextFunction) {
     const brand = await BrandService.getById(req.params.id);
+
+    const validation = validateRequiredFields(req.body, ["brand_name"]);
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
 
     const oldImage = Array?.isArray(brand?.image)
       ? brand?.image?.map((b) => b?.public_id)
