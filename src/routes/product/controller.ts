@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction, Image } from "../../interface";
-import { ErrorHandler, SuccessHandler } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  validateRequiredFields,
+} from "../../utils";
 import { ProductService } from "./service";
 import { STATUSCODE } from "../../constants";
 import { uploadImage } from "../../utils";
@@ -22,6 +26,20 @@ export class ProductController {
 
   static async AddProduct(req: Request, res: Response, next: NextFunction) {
     const image = await uploadImage(req.files as Express.Multer.File[], []);
+    const validator = validateRequiredFields(req.body, [
+      "brand",  
+      "product_name",
+      "price",
+      "description",
+      "color",
+      "category",
+      "quantity",
+    ]);
+
+    if (!validator.isValid) {
+      return next(new ErrorHandler(validator.error));
+    }
+
     const price = Number(req.body.price);
     const quantity = Number(req.body.quantity);
     const data = await ProductService.Add({
@@ -34,6 +52,20 @@ export class ProductController {
   }
 
   static async updateProduct(req: Request, res: Response, next: NextFunction) {
+    const validator = validateRequiredFields(req.body, [
+      "brand",  
+      "product_name",
+      "price",
+      "description",
+      "color",
+      "category",
+      "quantity",
+    ]);
+
+    if (!validator.isValid) {
+      return next(new ErrorHandler(validator.error));
+    }
+
     const product = await ProductService.getOne(req.params.id);
 
     const oldImage = Array?.isArray(product?.image)
