@@ -1,6 +1,10 @@
 import { STATUSCODE } from "../../constants";
 import { Request, Response, NextFunction } from "../../interface";
-import { ErrorHandler, SuccessHandler } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  validateRequiredFields,
+} from "../../utils";
 import { ProductService } from "../product/service";
 import { OrderService } from "./service";
 
@@ -9,7 +13,7 @@ export class OrderController {
     const data = await OrderService.getAll();
 
     return !data || data.length === STATUSCODE.ZERO
-      ?  next(new ErrorHandler("No orders found"))
+      ? next(new ErrorHandler("No orders found"))
       : SuccessHandler(res, "Orders found", data);
   }
 
@@ -21,6 +25,16 @@ export class OrderController {
   }
 
   static async addOrder(req: Request, res: Response, next: NextFunction) {
+    const validations = validateRequiredFields(req.body, [
+      "user",
+      "products",
+      "payment",
+    ]);
+
+    if (!validations.isValid) {
+      return new ErrorHandler(validations.error);
+    }
+    
     const order = await OrderService.findLastOrder();
 
     let orderCounter: number = 0;
@@ -63,9 +77,11 @@ export class OrderController {
   static async orderPacked(req: Request, res: Response, next: NextFunction) {
     const data = await OrderService.orderPacked(req.params.id);
 
-    for(const order of data?.products){
-      const product = await ProductService.getOne(order?.product?.toString()); 
-     await ProductService.updateById(order?.product?.toString(), { quantity: product?.quantity - order?.quantity });  
+    for (const order of data?.products) {
+      const product = await ProductService.getOne(order?.product?.toString());
+      await ProductService.updateById(order?.product?.toString(), {
+        quantity: product?.quantity - order?.quantity,
+      });
     }
     return SuccessHandler(res, "Order successfully packed", data);
   }
