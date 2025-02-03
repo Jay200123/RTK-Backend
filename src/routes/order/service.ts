@@ -95,7 +95,10 @@ export class OrderService {
   static async orderDelivered(id: string) {
     return await Order.findByIdAndUpdate(
       id,
-      { status: "Delivered" },
+      { 
+        status: "Delivered",
+        date_delivered: Date.now()
+      },
       { new: true }
     );
   }
