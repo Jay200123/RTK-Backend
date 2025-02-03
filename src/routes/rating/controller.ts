@@ -1,7 +1,12 @@
 import { RatingService } from "./service";
 import { OrderService } from "../order/service";
 import { Request, Response, NextFunction } from "../../interface";
-import { ErrorHandler, SuccessHandler, uploadImage } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  uploadImage,
+  validateRequiredFields,
+} from "../../utils";
 import { cloudinary } from "../../config";
 import { STATUSCODE } from "../../constants";
 import { Image, Product } from "../../interface";
@@ -22,6 +27,18 @@ export class RatingController {
   }
 
   static async AddRating(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, [
+      "user",
+      "product",
+      "order",
+      "description",
+      "rating",
+    ]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+
     const order = await OrderService.getById(req.params.id);
 
     const findProduct = order?.products?.find(
@@ -42,7 +59,7 @@ export class RatingController {
         req.params.id,
         req.body.product,
         data?._id.toString()
-      );  
+      );
     }
 
     return SuccessHandler(res, "Rating created successfully", data);
@@ -53,6 +70,18 @@ export class RatingController {
     res: Response,
     next: NextFunction
   ) {
+    const validation = validateRequiredFields(req.body, [
+      "user",
+      "product",
+      "order",
+      "description",
+      "rating",
+    ]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+    
     const rating = await RatingService.getById(req.params.id);
 
     const oldImage = Array?.isArray(rating?.image)
