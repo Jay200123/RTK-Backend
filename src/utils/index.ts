@@ -1,3 +1,4 @@
 export * from "./handler";
 export * from "./hashPassword";
 export * from "./imageUpload";
+export * from "./validateFields";
