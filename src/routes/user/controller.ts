@@ -1,5 +1,9 @@
 import { Request, Response, NextFunction, Image } from "../../interface";
-import { ErrorHandler, SuccessHandler } from "../../utils";
+import {
+  ErrorHandler,
+  SuccessHandler,
+  validateRequiredFields,
+} from "../../utils";
 import { UserService } from "./service";
 import { STATUSCODE } from "../../constants";
 import { uploadImage } from "../../utils";
@@ -20,16 +24,20 @@ export class UserController {
       : SuccessHandler(res, "User found", data);
   }
 
-  static async AddUser(req: Request, res: Response, next: NextFunction) {
-    const image = await uploadImage(req.files as Express.Multer.File[], []);
-    const data = await UserService.Add({
-      ...req.body,
-      image: image,
-    });
-    return SuccessHandler(res, "User created", data);
-  }
-
   static async updateUser(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, [
+      "fullname",
+      "contact_number",
+      "address",
+      "city",
+      "email",
+      "password",
+    ]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+
     const user = await UserService.getOne(req.params.id);
 
     const oldImage = Array?.isArray(user?.image)
