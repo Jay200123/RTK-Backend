@@ -5,6 +5,7 @@ import {
   SuccessHandler,
   uploadImage,
   hashPassword,
+  validateRequiredFields,
 } from "../../utils";
 import bcrypt from "bcrypt";
 import { generateToken, generateBlacklist } from "../../middleware";
@@ -12,6 +13,19 @@ import { generateToken, generateBlacklist } from "../../middleware";
 export class AuthenticationController {
   static async register(req: Request, res: Response, next: NextFunction) {
     const user = await UserService.getOnEmail(req.body.email);
+
+    const validation = validateRequiredFields(req.body, [
+      "fullname",
+      "contact_number",
+      "address",
+      "city",
+      "email",
+      "password",
+    ]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
 
     if (user) {
       return next(new ErrorHandler("Email already exists"));
@@ -25,10 +39,15 @@ export class AuthenticationController {
       password: password,
       image: image,
     });
-    return SuccessHandler(res, "User created", data);
+    return SuccessHandler(res, "User Successfully Registered", data);
   }
 
   static async login(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, ["email", "password"]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
     const data = await UserService.getOnEmail(req.body.email);
 
     if (!data) {
