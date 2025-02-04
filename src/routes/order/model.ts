@@ -60,6 +60,18 @@ const orderSchema: Schema<Order> = new Schema({
     type: String,
     required: true,
   },
+  isCancelled: {
+    type: Boolean,
+    default: false, 
+  },
+  isCancelApproved: {
+    type: Boolean,
+    default: false,
+  },
+  reason: {
+    type: String,
+    required: false,  
+  }
 });
 
 const Order = model<Order>(RESOURCE.ORDERS, orderSchema);
