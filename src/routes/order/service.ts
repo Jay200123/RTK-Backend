@@ -95,11 +95,39 @@ export class OrderService {
   static async orderDelivered(id: string) {
     return await Order.findByIdAndUpdate(
       id,
-      { 
+      {
         status: "Delivered",
-        date_delivered: Date.now()
+        date_delivered: Date.now(),
       },
       { new: true }
+    );
+  }
+
+  static async cancelById(id: string, reason: string) {
+    return await Order.findByIdAndUpdate(
+      id,
+      {
+        status: "Cancelled",
+        isCancelled: true,
+        reason: reason,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+  }
+
+  static async approveCancelById(id: string) {
+    return await Order.findByIdAndUpdate(
+      id,
+      {
+        isCancelApproved: true,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
     );
   }
 
