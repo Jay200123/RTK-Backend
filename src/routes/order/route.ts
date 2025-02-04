@@ -56,11 +56,18 @@ const orderRoutes: Route[] = [
     handler: OrderController.orderDelivered,
   },
   {
-    method: METHOD.PATCH as keyof Router, 
+    method: METHOD.PATCH as keyof Router,
     path: PATH.CANCEL_ORDER,
     role: [ROLE.ADMIN],
     middleware: [verifyToken],
-    handler: OrderController.orderCancelled
+    handler: OrderController.orderCancelled,
+  },
+  {
+    method: METHOD.PATCH as keyof Router,
+    path: PATH.APPROVE_CANCEL_ORDER,
+    role: [ROLE.ADMIN],
+    middleware: [verifyToken],
+    handler: OrderController.approveCancelOrder,
   },
   {
     method: METHOD.DELETE as keyof Router,
