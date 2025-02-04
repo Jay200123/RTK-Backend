@@ -32,9 +32,9 @@ export class OrderController {
     ]);
 
     if (!validations.isValid) {
-      return new ErrorHandler(validations.error);
+      return next(new ErrorHandler(validations.error));
     }
-    
+
     const order = await OrderService.findLastOrder();
 
     let orderCounter: number = 0;
@@ -94,6 +94,16 @@ export class OrderController {
   static async orderDelivered(req: Request, res: Response, next: NextFunction) {
     const data = await OrderService.orderDelivered(req.params.id);
     return SuccessHandler(res, "Order successfully delivered", data);
+  }
+
+  static async orderCancelled(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, ["reason"]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+    const data = await OrderService.cancelById(req.params.id, req.body.reason);
+    return SuccessHandler(res, "Order successfully cancelled", data);
   }
 
   static async deleteOrder(req: Request, res: Response, next: NextFunction) {
