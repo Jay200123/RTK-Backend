@@ -50,7 +50,7 @@ export class OrderService {
       })
       .populate({
         path: "user",
-        select: "fullname",
+        select: "fullname address contact_number email",
       })
       .populate({
         path: "products",
