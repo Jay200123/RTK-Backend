@@ -103,7 +103,12 @@ export class OrderController {
       return next(new ErrorHandler(validation.error));
     }
     const data = await OrderService.cancelById(req.params.id, req.body.reason);
-    return SuccessHandler(res, "Order successfully cancelled", data);
+    return SuccessHandler(res, "Cancel request submitted successfully", data);
+  }
+
+  static async approveCancelOrder(req: Request, res: Response, next: NextFunction){
+    const data = await OrderService.approveCancelById(req.params.id); 
+    return SuccessHandler(res, "Order cancel approved", data); 
   }
 
   static async deleteOrder(req: Request, res: Response, next: NextFunction) {
