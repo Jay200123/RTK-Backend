@@ -20,4 +20,5 @@ export const PATH = {
   RATE_ORDER: "/rate/order/:id",  
   RATING_ID: "/rating/:id",
   EDIT_RATING_ID: "/rating/edit/:id",
+  CANCEL_ORDER: "/order/cancel/:id",  
 };
