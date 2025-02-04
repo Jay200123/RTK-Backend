@@ -29,6 +29,9 @@ interface Order extends Document {
   price: number;
   status: StatusOrder;
   payment: Payment;
+  isCancelled: boolean;
+  isCancelApproved: boolean;
+  reason: string;
   createdAt: Date;  
 }
 
