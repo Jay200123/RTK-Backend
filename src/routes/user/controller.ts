@@ -31,7 +31,6 @@ export class UserController {
       "address",
       "city",
       "email",
-      "password",
     ]);
 
     if (!validation.isValid) {
