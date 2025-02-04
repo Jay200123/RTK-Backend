@@ -58,7 +58,7 @@ const orderRoutes: Route[] = [
   {
     method: METHOD.PATCH as keyof Router,
     path: PATH.CANCEL_ORDER,
-    role: [ROLE.ADMIN],
+    role: [ROLE.ADMIN, ROLE.USER],  
     middleware: [verifyToken],
     handler: OrderController.orderCancelled,
   },
