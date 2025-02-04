@@ -21,4 +21,5 @@ export const PATH = {
   RATING_ID: "/rating/:id",
   EDIT_RATING_ID: "/rating/edit/:id",
   CANCEL_ORDER: "/order/cancel/:id",  
+  APPROVE_CANCEL_ORDER: "/order/cancel/approve/:id",  
 };
