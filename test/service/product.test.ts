@@ -131,6 +131,33 @@ describe("Product Service", () => {
     expect(res).toEqual(data);
   });
 
-  //   test("Update product by id", async () => {});
+  test("Update product by id", async () => {
+    const data = {
+      _id: "60f8c4c4c4c4c4c4c4c4b3",
+      brand: "60f8c4c4c4c4c4c4c4c4b3",
+      product_name: "Product 2",
+      price: 2000,
+      description: "Lorem Ipsum",
+      color: "#000000",
+      category: "Computer",
+      quantity: 10,
+      isNewlyCreated: true,
+      image: [],
+      __v: 0,
+    };
+
+    (
+      Product.findByIdAndUpdate as jest.MockedFunction<
+        typeof Product.findByIdAndUpdate
+      >
+    ).mockResolvedValue(data as any);
+
+    const res = await ProductService.updateById(
+      "60f8c4c4c4c4c4c4c4c4b3",
+      data as any
+    );
+    expect(res).toBeTruthy();
+    expect(res).toEqual(data);
+  });
   //   test("Delete product by id", async () => {});
 });
