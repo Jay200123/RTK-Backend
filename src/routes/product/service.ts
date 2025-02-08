@@ -1,4 +1,4 @@
-import { Product } from "./model";
+import Product  from "./model";
 import { Product as ProductType } from "../../interface";
 
 export class ProductService {
