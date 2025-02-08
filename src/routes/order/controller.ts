@@ -45,10 +45,6 @@ export class OrderController {
 
     let totalPrice: number = 0;
     for (const products of req.body.products) {
-      if (!products.product || !products.quantity) {
-        return new ErrorHandler("Product and quantity are required");
-      }
-
       const product = await ProductService.getOne(products.product);
       totalPrice += product.price * products.quantity;
     }
