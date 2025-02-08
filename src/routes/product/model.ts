@@ -45,4 +45,4 @@ const productSchema: Schema<Product> = new Schema({
 });
 
 const Product = model<Product>(RESOURCE.PRODUCTS, productSchema);
-export { Product };
+export default Product;
