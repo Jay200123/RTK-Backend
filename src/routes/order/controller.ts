@@ -47,6 +47,14 @@ export class OrderController {
     for (const products of req.body.products) {
       const product = await ProductService.getOne(products.product);
       totalPrice += product.price * products.quantity;
+        
+      if (product.quantity < products.quantity) {
+        return next(new ErrorHandler("Product quantity not available"));
+      } else if (product.quantity === 0) {
+        return next(new ErrorHandler("Product out of stock"));
+      } else {
+        return next(new ErrorHandler("Product not found"));
+      }
     }
 
     const totalAmount = totalPrice;
@@ -102,9 +110,13 @@ export class OrderController {
     return SuccessHandler(res, "Cancel request submitted successfully", data);
   }
 
-  static async approveCancelOrder(req: Request, res: Response, next: NextFunction){
-    const data = await OrderService.approveCancelById(req.params.id); 
-    return SuccessHandler(res, "Order cancel approved", data); 
+  static async approveCancelOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const data = await OrderService.approveCancelById(req.params.id);
+    return SuccessHandler(res, "Order cancel approved", data);
   }
 
   static async deleteOrder(req: Request, res: Response, next: NextFunction) {
