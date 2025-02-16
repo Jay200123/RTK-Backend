@@ -4,6 +4,7 @@ import {
   SuccessHandler,
   validateRequiredFields,
   generateRandomCode,
+  sendEmail,
 } from "../../utils";
 import { UserService } from "./service";
 import { STATUSCODE } from "../../constants";
@@ -78,9 +79,29 @@ export class UserController {
   }
 
   static async sendUserOTP(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body.email);
+    const user = await UserService.getUserByEmail(req.body.email);
+
+    if (!user) {
+      return next(new ErrorHandler("User Email not found"));
+    }
+
+    if (
+      new Date().getTime() -
+        new Date(user.verificationCode.createdAt).getTime() <
+      5 * 60 * 1000
+    ) {
+      return next(
+        new ErrorHandler(
+          "Please wait 5 minutes before requesting a new verification code"
+        )
+      );
+    }
 
     const code = generateRandomCode();
-    console.log(code);
+
+    const data = await UserService.setCodeByEmail(req.body.email, code);
+    await sendEmail(req.body.email, code);
+
+    return SuccessHandler(res, "Verification code sent successfully", data);
   }
 }
