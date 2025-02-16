@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Reset Notification</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+      .container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .content {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .email-header {
+        font-size: 20px;
+        background-color: #222;
+        color: #ffffff;
+        padding: 12px;
+        border-radius: 6px 6px 0 0;
+      }
+      .email-body {
+        padding: 20px;
+      }
+      .otp-code {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d9534f;
+        margin: 10px 0;
+      }
+      .footer {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #777;
+      }
+      @media screen and (max-width: 600px) {
+        .container {
+          padding: 10px;
+        }
+        .content {
+          padding: 15px;
+        }
+        .email-header {
+          font-size: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="email-header">User Account Password Reset</div>
+        <div class="email-body">
+          <p>Hi,</p>
+          <p>Your OTP Code:</p>
+          <p class="otp-code">{{ message }}</p>
+          <p>Please use this code to reset your password.</p>
+        </div>
+        <div class="footer">
+          <p>Best regards,</p>
+          <p><strong>Tech Fix Dev Team</strong></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
