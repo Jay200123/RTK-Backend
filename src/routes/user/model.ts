@@ -31,6 +31,16 @@ const userSchema: Schema<User> = new Schema({
     enum: ["User", "Admin"],
     default: "User",
   },
+  verificationCode: {
+    code: {
+      type: String,
+      required: false,
+    },
+    createdAt: {
+      type: Date,
+      required: false,
+    },
+  },
   image: [
     {
       public_id: String,
