@@ -23,4 +23,5 @@ export const PATH = {
   CANCEL_ORDER: "/order/cancel/:id",  
   APPROVE_CANCEL_ORDER: "/order/cancel/approve/:id", 
   SEND_OTP: "/user/otp",   
+  UPDATE_OTP_PASSWORD: "/user/otp/password",
 };
