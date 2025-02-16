@@ -80,6 +80,11 @@ export class UserController {
   }
 
   static async sendUserOTP(req: Request, res: Response, next: NextFunction) {
+    const validation = validateRequiredFields(req.body, ["email"]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
     const user = await UserService.getUserByEmail(req.body.email);
 
     if (!user) {
