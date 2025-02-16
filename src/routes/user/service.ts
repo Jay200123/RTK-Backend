@@ -47,6 +47,11 @@ export class UserService {
     );
   }
 
+  static async getUserByOTP(otp: string) {
+    return await User.findOne({ "verificationCode.code": otp });
+  }
+  
+
   static async updatePasswordByOTP(otp: string, password: string) {
     return await User.findByIdAndUpdate(
       (
