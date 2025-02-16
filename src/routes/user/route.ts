@@ -41,6 +41,13 @@ const userRoutes: Route[] = [
     middleware: [],
     handler: UserController.sendUserOTP,
   },
+  {
+    method: METHOD.PATCH as keyof Router,
+    path: PATH.UPDATE_OTP_PASSWORD,
+    role: [],
+    middleware: [],
+    handler: UserController.updateUserPassword,
+  },
 ];
 
 userRoutes.forEach((route) => {
