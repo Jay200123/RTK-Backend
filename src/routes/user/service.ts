@@ -27,4 +27,17 @@ export class UserService {
   static async deleteById(id: string) {
     return await User.findByIdAndDelete(id);
   }
+
+  static async setCodeByEmail(email: string, code: string) {  
+    return await User.findByIdAndUpdate(
+      (await User.findOne({ email }))?._id,
+      { verificationCode:
+         { 
+          code: code,
+          createdAt: new Date()
+         }
+        },
+      { new: true, runValidators: true, },
+    );
+  }
 }
