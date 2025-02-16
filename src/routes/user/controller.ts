@@ -3,6 +3,7 @@ import {
   ErrorHandler,
   SuccessHandler,
   validateRequiredFields,
+  generateRandomCode,
 } from "../../utils";
 import { UserService } from "./service";
 import { STATUSCODE } from "../../constants";
@@ -74,5 +75,12 @@ export class UserController {
     return !data
       ? next(new ErrorHandler("No user record found"))
       : SuccessHandler(res, "user deleted successfully", data);
+  }
+
+  static async sendUserOTP(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body.email);
+
+    const code = generateRandomCode();
+    console.log(code);
   }
 }
