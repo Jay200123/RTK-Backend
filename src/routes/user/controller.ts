@@ -124,11 +124,9 @@ export class UserController {
       Date.now() - new Date(code.verificationCode.createdAt).getTime() >
       5 * 60 * 1000
     ) {
-      code.verificationCode = null;
-      await code.save();
+      await UserService.expiredVerificationCode(code._id?.toString());
       return next(new ErrorHandler("OTP expired"));
     }
-  
 
     const data = await UserService.updatePasswordByOTP(req.body.otp, password);
 
