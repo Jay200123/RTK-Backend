@@ -34,6 +34,13 @@ const userRoutes: Route[] = [
     middleware: [verifyToken],
     handler: UserController.deleteUser,
   },
+  {
+    method: METHOD.POST as keyof Router,
+    path: PATH.SEND_OTP,
+    role: [],
+    middleware: [],
+    handler: UserController.sendUserOTP,
+  },
 ];
 
 userRoutes.forEach((route) => {
