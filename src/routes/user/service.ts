@@ -28,16 +28,24 @@ export class UserService {
     return await User.findByIdAndDelete(id);
   }
 
-  static async setCodeByEmail(email: string, code: string) {  
+  static async getUserByEmail(email: string) {
+    return await User.findOne({ email });
+  }
+
+  static async setCodeByEmail(email: string, code: string) {
     return await User.findByIdAndUpdate(
-      (await User.findOne({ email }))?._id,
-      { verificationCode:
-         { 
+      (
+        await User.findOne({ email })
+      )?._id,
+      {
+        verificationCode: {
           code: code,
-          createdAt: new Date()
-         }
+          createdAt: new Date(),
         },
-      { new: true, runValidators: true, },
+      },
+      { new: true, runValidators: true }
     );
   }
+
+  
 }
