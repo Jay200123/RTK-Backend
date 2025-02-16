@@ -4,5 +4,6 @@ export const RESOURCE = {
   PRODUCTS: "products",
   BRANDS: "brands", 
   ORDERS: "orders",
-  RATINGS: "ratings",	  	
+  RATINGS: "ratings",
+  GMAIL:"gmail",  	
 };
