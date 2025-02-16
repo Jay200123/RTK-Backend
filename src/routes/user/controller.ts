@@ -120,6 +120,7 @@ export class UserController {
 
     const code = await UserService.getUserByOTP(req.body.otp);
 
+    // Check if OTP is expired by comparing the current time with the time the OTP was created  which is 5 minutes  * 60 seconds * 1000 milliseconds
     if (
       Date.now() - new Date(code.verificationCode.createdAt).getTime() >
       5 * 60 * 1000
