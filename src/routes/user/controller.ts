@@ -5,6 +5,7 @@ import {
   validateRequiredFields,
   generateRandomCode,
   sendEmail,
+  hashPassword,
 } from "../../utils";
 import { UserService } from "./service";
 import { STATUSCODE } from "../../constants";
@@ -103,5 +104,24 @@ export class UserController {
     await sendEmail(req.body.email, code);
 
     return SuccessHandler(res, "Verification code sent successfully", data);
+  }
+  static async updateUserPassword(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const validation = validateRequiredFields(req.body, ["otp", "password"]);
+
+    if (!validation.isValid) {
+      return next(new ErrorHandler(validation.error));
+    }
+
+    const password = await hashPassword(req.body.password);
+
+    const data = await UserService.updatePasswordByOTP(req.body.otp, password);
+
+    return !data
+      ? next(new ErrorHandler("Invalid OTP"))
+      : SuccessHandler(res, "Password updated successfully", data);
   }
 }
