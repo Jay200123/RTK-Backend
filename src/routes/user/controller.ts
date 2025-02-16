@@ -118,6 +118,18 @@ export class UserController {
 
     const password = await hashPassword(req.body.password);
 
+    const code = await UserService.getUserByOTP(req.body.otp);
+
+    if (
+      Date.now() - new Date(code.verificationCode.createdAt).getTime() >
+      5 * 60 * 1000
+    ) {
+      code.verificationCode = null;
+      await code.save();
+      return next(new ErrorHandler("OTP expired"));
+    }
+  
+
     const data = await UserService.updatePasswordByOTP(req.body.otp, password);
 
     return !data
