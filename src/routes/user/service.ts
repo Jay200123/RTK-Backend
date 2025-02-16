@@ -50,7 +50,16 @@ export class UserService {
   static async getUserByOTP(otp: string) {
     return await User.findOne({ "verificationCode.code": otp });
   }
-  
+
+  static async expiredVerificationCode(id: string) {
+    return await User.findByIdAndUpdate(
+      id,
+      {
+        verificationCode: null,
+      },
+      { new: true, runValidators: true }
+    );
+  }
 
   static async updatePasswordByOTP(otp: string, password: string) {
     return await User.findByIdAndUpdate(
