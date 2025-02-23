@@ -125,6 +125,10 @@ export class UserController {
 
     const code = await UserService.getUserByOTP(req.body.otp);
 
+    if(!code){
+      return next(new ErrorHandler("Invalid OTP")); 
+    }
+
     // Check if OTP is expired by comparing the current time with the time the OTP was created  which is 5 minutes  * 60 seconds * 1000 milliseconds
     if (
       Date.now() - new Date(code.verificationCode.createdAt).getTime() >
@@ -136,8 +140,6 @@ export class UserController {
 
     const data = await UserService.updatePasswordByOTP(req.body.otp, password);
 
-    return !data
-      ? next(new ErrorHandler("Invalid OTP"))
-      : SuccessHandler(res, "Password updated successfully", data);
+    return SuccessHandler(res, "Password updated successfully", data)
   }
 }
